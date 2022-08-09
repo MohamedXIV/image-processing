@@ -39,32 +39,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var supertest_1 = __importDefault(require("supertest"));
-var index_1 = __importDefault(require("../index"));
-var req = (0, supertest_1.default)(index_1.default);
-describe("Test endpoint responses", function () {
-    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
+var fs_1 = require("fs");
+var sharp_1 = __importDefault(require("sharp"));
+function Resizer(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var oldImage, width, height;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api")];
-                case 1:
-                    res = _a.sent();
-                    expect(res.status).toBeTruthy;
+                case 0: return [4 /*yield*/, fs_1.promises.readFile('assets/uploads/images/deer.jpg')];
+                case 1: return [4 /*yield*/, (_a.sent())];
+                case 2:
+                    oldImage = _a.sent();
+                    width = parseInt(req.params.width);
+                    height = parseInt(req.params.height);
+                    (0, sharp_1.default)(oldImage).resize(width, height).toFile('newImage.jpg', function (err, info) { console.error(err); console.log(info); });
+                    next();
                     return [2 /*return*/];
             }
         });
-    }); });
-    it("gets the api status", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api")];
-                case 1:
-                    res = _a.sent();
-                    expect(res.status).toBe(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-});
+    });
+}
+exports.default = Resizer;
