@@ -1,5 +1,15 @@
-import myFunc from '../index';
+import supertest from "supertest";
+import app from "../index";
 
-it('expect myFunc(5) to equal 25', () => {
-  expect(myFunc(5)).toEqual(25);
+const req = supertest(app);
+
+describe("Test endpoint responses", (): void => {
+  it("gets the api endpoint", async () => {
+    const res = await req.get("/api");
+    expect(res.status).toBeTruthy;
+  });
+  it("gets the api status", async () => {
+    const res = await req.get("/api");
+    expect(res.status).toBe(200);
+  });
 });
