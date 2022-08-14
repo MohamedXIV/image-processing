@@ -12,4 +12,8 @@ describe("Test endpoint responses", (): void => {
     const res = await req.get("/api/resize");
     expect(res.status).toBe(200);
   });
+  it("test resize endpoint", async () => {
+    const res = await req.get("/api/resize");
+    expect(res.status).toBe(200);
+  });
 });
