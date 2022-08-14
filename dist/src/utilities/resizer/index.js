@@ -95,31 +95,16 @@ function Resizer(req, res, next) {
                 //res.send("<h3 style='color:blue'>both width and height are present</h3>");
                 GenerateImage(imageName || undefined, res, width, height);
             }
-            else if (!isNaN(+req.query.width) &&
-                isNaN(+req.query.height) &&
+            else if (req.query.width &&
+                !req.query.height &&
                 !HasCache(imageName || undefined, res, width)) {
                 GenerateImage(imageName || undefined, res, width);
             }
-            else if (!isNaN(+req.query.height) &&
-                isNaN(+req.query.width) &&
+            else if (req.query.height &&
+                !req.query.width &&
                 !HasCache(imageName || undefined, res, width, height)) {
                 GenerateImage(imageName || undefined, res, width, height);
             }
-            // try {
-            //   const originalImage: Buffer = await fs.readFile(
-            //     `${baseDir}/${imageName}/${imageName}.jpg`
-            //   );
-            //   sharp(originalImage)
-            //     .resize(width)
-            //     .toFile(`newImage_${width}.jpg`, (err, info) => {
-            //       console.error(err);
-            //       console.log(info);
-            //       const dir = path.join(__dirname, `../../../newImage_${width}.jpg`);
-            //       res.sendFile(dir);
-            //     });
-            // } catch (err) {
-            //   console.error(err);
-            // }
             next();
             return [2 /*return*/];
         });

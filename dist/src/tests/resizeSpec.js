@@ -43,7 +43,7 @@ var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
 var req = (0, supertest_1.default)(index_1.default);
 describe("Test endpoint responses", function () {
-    it("gets the api endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("Test if the app is running", function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -55,7 +55,7 @@ describe("Test endpoint responses", function () {
             }
         });
     }); });
-    it("test resize endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("Test resize endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -67,11 +67,35 @@ describe("Test endpoint responses", function () {
             }
         });
     }); });
-    it("test resize endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+    it("Test imageName query", function () { return __awaiter(void 0, void 0, void 0, function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api/resize")];
+                case 0: return [4 /*yield*/, req.get("/api/resize?imageName")];
+                case 1:
+                    res = _a.sent();
+                    expect(res.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Test width query", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, req.get("/api/resize?imageName=test&&width=300")];
+                case 1:
+                    res = _a.sent();
+                    expect(res.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it("Test height query", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, req.get("/api/resize?imageName=test&&height=300")];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);

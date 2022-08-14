@@ -44,34 +44,18 @@ export default async function Resizer(
     //res.send("<h3 style='color:blue'>both width and height are present</h3>");
     GenerateImage(<string>imageName || undefined, res, width, height);
   } else if (
-    !isNaN(+req.query.width!) &&
-    isNaN(+req.query.height!) &&
+    req.query.width &&
+    !req.query.height &&
     !HasCache(<string>imageName || undefined, res, width)
   ) {
     GenerateImage(<string>imageName || undefined, res, width);
   } else if (
-    !isNaN(+req.query.height!) &&
-    isNaN(+req.query.width!) &&
+    req.query.height &&
+    !req.query.width &&
     !HasCache(<string>imageName || undefined, res, width, height)) {
     GenerateImage(<string>imageName || undefined, res, width, height);
   }
 
-  // try {
-
-  //   const originalImage: Buffer = await fs.readFile(
-  //     `${baseDir}/${imageName}/${imageName}.jpg`
-  //   );
-  //   sharp(originalImage)
-  //     .resize(width)
-  //     .toFile(`newImage_${width}.jpg`, (err, info) => {
-  //       console.error(err);
-  //       console.log(info);
-  //       const dir = path.join(__dirname, `../../../newImage_${width}.jpg`);
-  //       res.sendFile(dir);
-  //     });
-  // } catch (err) {
-  //   console.error(err);
-  // }
   next();
 }
 
