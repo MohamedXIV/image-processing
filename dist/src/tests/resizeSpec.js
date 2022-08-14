@@ -67,4 +67,16 @@ describe("Test endpoint responses", function () {
             }
         });
     }); });
+    it("test resize endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, req.get("/api/resize")];
+                case 1:
+                    res = _a.sent();
+                    expect(res.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
