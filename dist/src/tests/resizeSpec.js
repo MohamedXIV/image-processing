@@ -47,7 +47,7 @@ describe("Test endpoint responses", function () {
         var res;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api/resize/480/360")];
+                case 0: return [4 /*yield*/, req.get("/api")];
                 case 1:
                     res = _a.sent();
                     expect(res.status).toBe(200);
@@ -55,8 +55,16 @@ describe("Test endpoint responses", function () {
             }
         });
     }); });
-    // it("gets the api status", async () => {
-    //   const res = await req.get("/api/resize");
-    //   expect(res.status).toBe(200);
-    // });
+    it("test resize endpoint", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var res;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, req.get("/api/resize")];
+                case 1:
+                    res = _a.sent();
+                    expect(res.status).toBe(200);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
 });
