@@ -1,5 +1,8 @@
 import supertest from "supertest";
 import app from "../index";
+import { promises as fs } from "fs";
+import path from "path";
+import * as oldfs from "fs";
 
 const req = supertest(app);
 
@@ -15,5 +18,16 @@ describe("Test endpoint responses", (): void => {
   it("Test imageName query", async () => {
     const res = await req.get("/api/resize?imageName");
     expect(res.status).toBe(200);
+  });
+  it("Test width query if creates a new image", async () => {
+    const imageName = "test";
+    const width = 480;
+    await req.get(`/api/resize?imageName=${imageName}&width=${width}`);
+    const absoluteFilePath = path.join(
+      __dirname,
+      `../../../assets/uploads/images/${imageName}/${imageName}_w_${width}.jpg`
+    );
+    const isFileExists = oldfs.existsSync(absoluteFilePath);
+    expect(isFileExists).toBeTruthy();
   });
 });

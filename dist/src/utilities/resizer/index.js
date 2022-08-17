@@ -91,8 +91,6 @@ function Resizer(req, res, next) {
             width = Number(req.query.width);
             height = Number(req.query.height);
             if (req.query.width && req.query.height && !HasCache(imageName || undefined, res, width, height)) {
-                //res.send("<h3 style='color:orange'>Please enter a width and/or height</h3>");
-                //res.send("<h3 style='color:blue'>both width and height are present</h3>");
                 GenerateImage(imageName || undefined, res, width, height);
             }
             else if (req.query.width &&
@@ -120,19 +118,19 @@ function HasCache(fileName, res, width, height, bDir) {
     var dir = "".concat(bDir, "/").concat(fileName, "/").concat(fileName);
     var absoluteFilePath;
     if (height && width && oldfs.existsSync("".concat(dir, "_").concat(width, "x").concat(height, ".jpg"))) {
-        console.log("File exists: " + dir);
+        console.log("File exists, serve the cached image: " + "".concat(dir, "_").concat(width, "x").concat(height, ".jpg"));
         absoluteFilePath = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_").concat(width, "x").concat(height, ".jpg"));
         res.sendFile(absoluteFilePath);
         return true;
     }
     else if (width && !height && oldfs.existsSync("".concat(dir, "_w_").concat(width, ".jpg"))) {
-        console.log("File exists, serve the cached image");
+        console.log("File exists, serve the cached image: " + "".concat(dir, "_w_").concat(width, ".jpg"));
         absoluteFilePath = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_w_").concat(width, ".jpg"));
         res.sendFile(absoluteFilePath);
         return true;
     }
     else if (height && !width && oldfs.existsSync("".concat(dir, "_h_").concat(height, ".jpg"))) {
-        //console.log("File exists, serve the cached image");
+        console.log("File exists, serve the cached image: " + "".concat(dir, "_h_").concat(height, ".jpg"));
         absoluteFilePath = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_h_").concat(height, ".jpg"));
         res.sendFile(absoluteFilePath);
         return true;

@@ -40,8 +40,7 @@ export default async function Resizer(
   const height = Number(req.query.height);
 
   if (req.query.width && req.query.height && !HasCache(<string>imageName || undefined, res, width, height)) {
-    //res.send("<h3 style='color:orange'>Please enter a width and/or height</h3>");
-    //res.send("<h3 style='color:blue'>both width and height are present</h3>");
+    
     GenerateImage(<string>imageName || undefined, res, width, height);
   } else if (
     req.query.width &&
@@ -72,7 +71,7 @@ function HasCache(
   let absoluteFilePath: string;
 
   if (height && width && oldfs.existsSync(`${dir}_${width}x${height}.jpg`)) {
-    console.log("File exists: " + dir);
+    console.log("File exists, serve the cached image: " + `${dir}_${width}x${height}.jpg`);
     absoluteFilePath = path.join(
       __dirname,
       `../../../assets/uploads/images/${fileName}/${fileName}_${width}x${height}.jpg`
@@ -80,7 +79,7 @@ function HasCache(
     res.sendFile(absoluteFilePath);
     return true;
   } else if (width && !height && oldfs.existsSync(`${dir}_w_${width}.jpg`)) {
-    console.log("File exists, serve the cached image");
+    console.log("File exists, serve the cached image: " + `${dir}_w_${width}.jpg`);
     absoluteFilePath = path.join(
       __dirname,
       `../../../assets/uploads/images/${fileName}/${fileName}_w_${width}.jpg`
@@ -88,7 +87,7 @@ function HasCache(
     res.sendFile(absoluteFilePath);
     return true;
   } else if (height && !width && oldfs.existsSync(`${dir}_h_${height}.jpg`)) {
-    //console.log("File exists, serve the cached image");
+    console.log("File exists, serve the cached image: " + `${dir}_h_${height}.jpg`);
     absoluteFilePath = path.join(
       __dirname,
       `../../../assets/uploads/images/${fileName}/${fileName}_h_${height}.jpg`

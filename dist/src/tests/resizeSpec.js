@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,6 +64,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var path_1 = __importDefault(require("path"));
+var oldfs = __importStar(require("fs"));
 var req = (0, supertest_1.default)(index_1.default);
 describe("Test endpoint responses", function () {
     it("Test if the app is running", function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -79,26 +104,19 @@ describe("Test endpoint responses", function () {
             }
         });
     }); });
-    it("Test width query", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
+    it("Test width query if creates a new image", function () { return __awaiter(void 0, void 0, void 0, function () {
+        var imageName, width, absoluteFilePath, isFileExists;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api/resize?imageName=test&&width=300")];
+                case 0:
+                    imageName = "test";
+                    width = 480;
+                    return [4 /*yield*/, req.get("/api/resize?imageName=".concat(imageName, "&width=").concat(width))];
                 case 1:
-                    res = _a.sent();
-                    expect(res.status).toBe(200);
-                    return [2 /*return*/];
-            }
-        });
-    }); });
-    it("Test height query", function () { return __awaiter(void 0, void 0, void 0, function () {
-        var res;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, req.get("/api/resize?imageName=test&&height=300")];
-                case 1:
-                    res = _a.sent();
-                    expect(res.status).toBe(200);
+                    _a.sent();
+                    absoluteFilePath = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(imageName, "/").concat(imageName, "_w_").concat(width, ".jpg"));
+                    isFileExists = oldfs.existsSync(absoluteFilePath);
+                    expect(isFileExists).toBeTruthy();
                     return [2 /*return*/];
             }
         });
