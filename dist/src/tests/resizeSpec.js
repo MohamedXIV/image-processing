@@ -64,6 +64,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var supertest_1 = __importDefault(require("supertest"));
 var index_1 = __importDefault(require("../index"));
+var resizer_1 = require("../utilities/resizer");
 var path_1 = __importDefault(require("path"));
 var oldfs = __importStar(require("fs"));
 var req = (0, supertest_1.default)(index_1.default);
@@ -111,8 +112,10 @@ describe("Test endpoint responses", function () {
                 case 0:
                     imageName = "test";
                     width = 480;
-                    return [4 /*yield*/, req.get("/api/resize?imageName=".concat(imageName, "&width=").concat(width))];
+                    //await req.get(`/api/resize?imageName=${imageName}&width=${width}`);
+                    return [4 /*yield*/, (0, resizer_1.GenerateImage)(imageName, null, width)];
                 case 1:
+                    //await req.get(`/api/resize?imageName=${imageName}&width=${width}`);
                     _a.sent();
                     absoluteFilePath = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(imageName, "/").concat(imageName, "_w_").concat(width, ".jpg"));
                     isFileExists = oldfs.existsSync(absoluteFilePath);

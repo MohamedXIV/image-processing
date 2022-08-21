@@ -98,9 +98,9 @@ function HasCache(
   return false;
 }
 
-async function GenerateImage(
+export async function GenerateImage(
   fileName: string | undefined,
-  res: express.Response,
+  res: express.Response | null = null,
   width = 0,
   height = 0,
   bDir: string = baseDir
@@ -112,14 +112,11 @@ async function GenerateImage(
       const originalImage: Buffer = await fs.readFile(
         `${bDir}/${fileName}/${fileName}.jpg`
       );
-      sharp(originalImage)
+      await sharp(originalImage)
         .resize(width, height)
-        .toFile(`assets/uploads/images/${fileName}/${fileName}_${width}x${height}.jpg`, (err, info) => {
-          console.error(err);
-          console.log(info);
-          const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_${width}x${height}.jpg`);
-          res.sendFile(dir);
-        });
+        .toFile(`assets/uploads/images/${fileName}/${fileName}_${width}x${height}.jpg`);
+        const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_${width}x${height}.jpg`);
+        res?.sendFile(dir);
     } catch (err) {
       console.error(err);
     }
@@ -128,14 +125,11 @@ async function GenerateImage(
       const originalImage: Buffer = await fs.readFile(
         `${bDir}/${fileName}/${fileName}.jpg`
       );
-      sharp(originalImage)
+      await sharp(originalImage)
         .resize(width)
-        .toFile(`assets/uploads/images/${fileName}/${fileName}_w_${width}.jpg`, (err, info) => {
-          console.error(err);
-          console.log(info);
-          const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_w_${width}.jpg`);
-          res.sendFile(dir);
-        });
+        .toFile(`assets/uploads/images/${fileName}/${fileName}_w_${width}.jpg`);
+        const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_w_${width}.jpg`);
+        res?.sendFile(dir);
     } catch (err) {
       console.error(err);
     }
@@ -144,14 +138,11 @@ async function GenerateImage(
       const originalImage: Buffer = await fs.readFile(
         `${bDir}/${fileName}/${fileName}.jpg`
       );
-      sharp(originalImage)
+      await sharp(originalImage)
         .resize(height)
-        .toFile(`assets/uploads/images/${fileName}/${fileName}_h_${height}.jpg`, (err, info) => {
-          console.error(err);
-          console.log(info);
-          const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_h_${height}.jpg`);
-          res.sendFile(dir);
-        });
+        .toFile(`assets/uploads/images/${fileName}/${fileName}_h_${height}.jpg`);
+        const dir = path.join(__dirname, `../../../assets/uploads/images/${fileName}/${fileName}_h_${height}.jpg`);
+          res?.sendFile(dir);
     } catch (err) {
       console.error(err);
     }

@@ -62,6 +62,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GenerateImage = void 0;
 var fs_1 = require("fs");
 var oldfs = __importStar(require("fs"));
 var sharp_1 = __importDefault(require("sharp"));
@@ -138,81 +139,80 @@ function HasCache(fileName, res, width, height, bDir) {
     return false;
 }
 function GenerateImage(fileName, res, width, height, bDir) {
+    if (res === void 0) { res = null; }
     if (width === void 0) { width = 0; }
     if (height === void 0) { height = 0; }
     if (bDir === void 0) { bDir = baseDir; }
     return __awaiter(this, void 0, void 0, function () {
-        var originalImage, err_1, originalImage, err_2, originalImage, err_3;
+        var originalImage, dir, err_1, originalImage, dir, err_2, originalImage, dir, err_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     console.log("Generating image...");
-                    if (!(height && width)) return [3 /*break*/, 5];
+                    if (!(height && width)) return [3 /*break*/, 6];
                     _a.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
+                    _a.trys.push([1, 4, , 5]);
                     return [4 /*yield*/, fs_1.promises.readFile("".concat(bDir, "/").concat(fileName, "/").concat(fileName, ".jpg"))];
                 case 2:
                     originalImage = _a.sent();
-                    (0, sharp_1.default)(originalImage)
-                        .resize(width, height)
-                        .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_").concat(width, "x").concat(height, ".jpg"), function (err, info) {
-                        console.error(err);
-                        console.log(info);
-                        var dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_").concat(width, "x").concat(height, ".jpg"));
-                        res.sendFile(dir);
-                    });
-                    return [3 /*break*/, 4];
+                    return [4 /*yield*/, (0, sharp_1.default)(originalImage)
+                            .resize(width, height)
+                            .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_").concat(width, "x").concat(height, ".jpg"))];
                 case 3:
+                    _a.sent();
+                    dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_").concat(width, "x").concat(height, ".jpg"));
+                    res === null || res === void 0 ? void 0 : res.sendFile(dir);
+                    return [3 /*break*/, 5];
+                case 4:
                     err_1 = _a.sent();
                     console.error(err_1);
-                    return [3 /*break*/, 4];
-                case 4: return [3 /*break*/, 14];
-                case 5:
-                    if (!width) return [3 /*break*/, 10];
-                    _a.label = 6;
+                    return [3 /*break*/, 5];
+                case 5: return [3 /*break*/, 17];
                 case 6:
-                    _a.trys.push([6, 8, , 9]);
-                    return [4 /*yield*/, fs_1.promises.readFile("".concat(bDir, "/").concat(fileName, "/").concat(fileName, ".jpg"))];
+                    if (!width) return [3 /*break*/, 12];
+                    _a.label = 7;
                 case 7:
-                    originalImage = _a.sent();
-                    (0, sharp_1.default)(originalImage)
-                        .resize(width)
-                        .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_w_").concat(width, ".jpg"), function (err, info) {
-                        console.error(err);
-                        console.log(info);
-                        var dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_w_").concat(width, ".jpg"));
-                        res.sendFile(dir);
-                    });
-                    return [3 /*break*/, 9];
+                    _a.trys.push([7, 10, , 11]);
+                    return [4 /*yield*/, fs_1.promises.readFile("".concat(bDir, "/").concat(fileName, "/").concat(fileName, ".jpg"))];
                 case 8:
+                    originalImage = _a.sent();
+                    return [4 /*yield*/, (0, sharp_1.default)(originalImage)
+                            .resize(width)
+                            .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_w_").concat(width, ".jpg"))];
+                case 9:
+                    _a.sent();
+                    dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_w_").concat(width, ".jpg"));
+                    res === null || res === void 0 ? void 0 : res.sendFile(dir);
+                    return [3 /*break*/, 11];
+                case 10:
                     err_2 = _a.sent();
                     console.error(err_2);
-                    return [3 /*break*/, 9];
-                case 9: return [3 /*break*/, 14];
-                case 10:
-                    if (!height) return [3 /*break*/, 14];
-                    _a.label = 11;
-                case 11:
-                    _a.trys.push([11, 13, , 14]);
-                    return [4 /*yield*/, fs_1.promises.readFile("".concat(bDir, "/").concat(fileName, "/").concat(fileName, ".jpg"))];
+                    return [3 /*break*/, 11];
+                case 11: return [3 /*break*/, 17];
                 case 12:
-                    originalImage = _a.sent();
-                    (0, sharp_1.default)(originalImage)
-                        .resize(height)
-                        .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_h_").concat(height, ".jpg"), function (err, info) {
-                        console.error(err);
-                        console.log(info);
-                        var dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_h_").concat(height, ".jpg"));
-                        res.sendFile(dir);
-                    });
-                    return [3 /*break*/, 14];
+                    if (!height) return [3 /*break*/, 17];
+                    _a.label = 13;
                 case 13:
+                    _a.trys.push([13, 16, , 17]);
+                    return [4 /*yield*/, fs_1.promises.readFile("".concat(bDir, "/").concat(fileName, "/").concat(fileName, ".jpg"))];
+                case 14:
+                    originalImage = _a.sent();
+                    return [4 /*yield*/, (0, sharp_1.default)(originalImage)
+                            .resize(height)
+                            .toFile("assets/uploads/images/".concat(fileName, "/").concat(fileName, "_h_").concat(height, ".jpg"))];
+                case 15:
+                    _a.sent();
+                    dir = path_1.default.join(__dirname, "../../../assets/uploads/images/".concat(fileName, "/").concat(fileName, "_h_").concat(height, ".jpg"));
+                    res === null || res === void 0 ? void 0 : res.sendFile(dir);
+                    return [3 /*break*/, 17];
+                case 16:
                     err_3 = _a.sent();
                     console.error(err_3);
-                    return [3 /*break*/, 14];
-                case 14: return [2 /*return*/];
+                    return [3 /*break*/, 17];
+                case 17: return [2 /*return*/];
             }
         });
     });
 }
+exports.GenerateImage = GenerateImage;
